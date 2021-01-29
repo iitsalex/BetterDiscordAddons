@@ -254,8 +254,9 @@ module.exports = (_ => {
 								let item = BDFDB.DOMUtils.getParent(BDFDB.dotCN.menuitem, event.target);
 								if (item) {
 									let createTooltip = _ => {
-										BDFDB.TooltipUtils.create(item, `From ${foundInput.name}:\n${text}\n\nTo ${foundOutput.name}:\n${foundTranslation}`, {
+										BDFDB.TooltipUtils.create(item, `${BDFDB.LanguageUtils.LibraryStrings.from} ${foundInput.name}:\n${text}\n\n${BDFDB.LanguageUtils.LibraryStrings.to} ${foundOutput.name}:\n${foundTranslation}`, {
 											type: "right",
+											color: "brand",
 											className: "googletranslate-tooltip"
 										});
 									};
@@ -453,7 +454,7 @@ module.exports = (_ => {
 				if (e.instance.props.message) {
 					let translation = translatedMessages[e.instance.props.message.id];
 					if (translation) e.returnvalue.props.children.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TooltipContainer, {
-						text: `From: ${this.getLanguageName(translation.input)}\nTo: ${this.getLanguageName(translation.output)}`,
+						text: `${BDFDB.LanguageUtils.LibraryStrings.from}: ${this.getLanguageName(translation.input)}\n${BDFDB.LanguageUtils.LibraryStrings.to}: ${this.getLanguageName(translation.output)}`,
 						tooltipConfig: {style: "max-width: 400px"},
 						children: BDFDB.ReactUtils.createElement("time", {
 							className: BDFDB.DOMUtils.formatClassName(BDFDB.disCN.messageedited, BDFDB.disCN._googletranslateoptiontranslated),
@@ -474,7 +475,7 @@ module.exports = (_ => {
 						else {
 							let [children, index] = BDFDB.ReactUtils.findParent(e.returnvalue, {props: [["className", BDFDB.disCN.embeddescription]]});
 							if (index > -1) children[index].props.children.push(BDFDB.ReactUtils.createElement(BDFDB.LibraryComponents.TooltipContainer, {
-								text: `From: ${this.getLanguageName(translation.input)}\nTo: ${this.getLanguageName(translation.output)}`,
+								text: `${BDFDB.LanguageUtils.LibraryStrings.from}: ${this.getLanguageName(translation.input)}\n${BDFDB.LanguageUtils.LibraryStrings.to}: ${this.getLanguageName(translation.output)}`,
 								tooltipConfig: {style: "max-width: 400px"},
 								children: BDFDB.ReactUtils.createElement("time", {
 									className: BDFDB.DOMUtils.formatClassName(BDFDB.disCN.messageedited, BDFDB.disCN._googletranslateoptiontranslated),
@@ -661,7 +662,7 @@ module.exports = (_ => {
 					let currentLoadingString = loadingString;
 					toast = BDFDB.NotificationUtils.toast(loadingString, {
 						timeout: 0,
-						orientation: "center",
+						position: "center",
 						onClose: _ => {BDFDB.TimeUtils.clear(toastInterval);}
 					});
 					toastInterval = BDFDB.TimeUtils.interval(_ => {
@@ -669,7 +670,7 @@ module.exports = (_ => {
 							finishTranslation("");
 							BDFDB.NotificationUtils.toast(`${this.labels.toast_translating_failed} - ${this.labels.toast_translating_tryanother}`, {
 								type: "danger",
-								orientation: "center"
+								position: "center"
 							});
 						}
 						else {
@@ -743,11 +744,11 @@ module.exports = (_ => {
 					else {
 						if (response.statusCode == 429) BDFDB.NotificationUtils.toast(`${this.labels.toast_translating_failed}. ${this.labels.toast_translating_tryanother}. Request Limit per Hour is reached.`, {
 							type: "danger",
-							orientation: "center"
+							position: "center"
 						});
 						else BDFDB.NotificationUtils.toast(`${this.labels.toast_translating_failed}. ${this.labels.toast_translating_tryanother}. Translation Server might be down.`, {
 							type: "danger",
-							orientation: "center"
+							position: "center"
 						});
 						callback("");
 					}
@@ -786,7 +787,7 @@ module.exports = (_ => {
 						else {
 							BDFDB.NotificationUtils.toast(`${this.labels.toast_translating_failed}. ${this.labels.toast_translating_tryanother}. Translation Server is down or API-key outdated.`, {
 								type: "danger",
-								orientation: "center"
+								position: "center"
 							});
 							callback("");
 						}
@@ -825,14 +826,14 @@ module.exports = (_ => {
 					if (result && result.indexOf('code="408"') > -1) {
 						BDFDB.NotificationUtils.toast(`${this.labels.toast_translating_failed}. ${this.labels.toast_translating_tryanother}. Monthly rate limit reached.`, {
 							type: "danger",
-							orientation: "center"
+							position: "center"
 						});
 						callback("");
 					}
 					else {
 						BDFDB.NotificationUtils.toast(`${this.labels.toast_translating_failed}. ${this.labels.toast_translating_tryanother}. Translation Server is down or API-key outdated.`, {
 							type: "danger",
-							orientation: "center"
+							position: "center"
 						});
 						callback("");
 					}
@@ -863,7 +864,7 @@ module.exports = (_ => {
 					else {
 						BDFDB.NotificationUtils.toast(`${this.labels.toast_translating_failed}. ${this.labels.toast_translating_tryanother}. Translation Server is down, daily limited reached or API-key outdated.`, {
 							type: "danger",
-							orientation: "center"
+							position: "center"
 						});
 						callback("");
 					}
@@ -911,21 +912,21 @@ module.exports = (_ => {
 				let string = "";
 				binary = binary.replace(/\n/g, "00001010").replace(/\r/g, "00001101").replace(/\t/g, "00001001").replace(/\s/g, "");
 				if (/^[0-1]*$/.test(binary)) {
-					let eightdigits = "";
+					let eightDigits = "";
 					let counter = 0;
 					for (let digit of binary) {
-						eightdigits += digit;
+						eightDigits += digit;
 						counter++;
 						if (counter > 7) {
-							string += String.fromCharCode(parseInt(eightdigits,2).toString(10));
-							eightdigits = "";
+							string += String.fromCharCode(parseInt(eightDigits, 2).toString(10));
+							eightDigits = "";
 							counter = 0;
 						}
 					}
 				}
 				else BDFDB.NotificationUtils.toast("Invalid binary format. Only use 0s and 1s.", {
 					type: "danger",
-					orientation: "center"
+					position: "center"
 				});
 				return string;
 			}

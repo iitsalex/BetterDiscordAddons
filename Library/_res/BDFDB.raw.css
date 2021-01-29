@@ -246,6 +246,9 @@ img:not([src]), img[src=""], img[src="null"] {
 	text-overflow: ellipsis;
 }
 
+[REPLACE_CLASS_userinfodate] {
+	user-select: text;
+}
 [REPLACE_CLASS_userpopout] [REPLACE_CLASS_userpopoutheadertext] + [REPLACE_CLASS_userinfodate],
 [REPLACE_CLASS_userprofile] [REPLACE_CLASS_userprofilenametag] + [REPLACE_CLASS_userinfodate] {
 	margin-top: 8px;
@@ -545,7 +548,8 @@ img:not([src]), img[src=""], img[src="null"] {
 [REPLACE_CLASS_settingstablecardlabel] {
 	display: flex;
 	align-items: center;
-	flex: 1 0 auto;
+	flex: 1 1 auto;
+	overflow: hidden;
 	color: var(--header-primary);
 }
 [REPLACE_CLASS_settingstablecardconfigs] {
@@ -1108,11 +1112,13 @@ img:not([src]), img[src=""], img[src="null"] {
 	position: relative;
 	display: flex;
 	align-items: center;
+	backdrop-filter: blur(5px);
 	border-radius: 3px;
 	box-shadow: var(--elevation-medium);
 	margin-top: 10px;
 	padding: 10px 10px 12px 10px;
 	overflow: hidden;
+	max-width: 50vw;
 	min-height: 24px;
 	height: unset;
 	opacity: 1;
@@ -1152,9 +1158,6 @@ img:not([src]), img[src=""], img[src="null"] {
 	left: 0;
 	opacity: 0.9;
 	z-index: 1;
-}
-[REPLACE_CLASS_toastrendered] [REPLACE_CLASS_toastbg] {
-	backdrop-filter: blur(5px);
 }
 [REPLACE_CLASS_toastinner] {
 	position: relative;
